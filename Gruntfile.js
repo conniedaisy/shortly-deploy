@@ -9,7 +9,7 @@ module.exports = function(grunt) {
       },
       dist: {
         src: ['public/client/*.js', 'public/lib/*.js'],
-        dest: 'public/client/built.js',
+        dest: 'public/minified/built.js',
       },
     },
 
@@ -31,15 +31,19 @@ module.exports = function(grunt) {
     uglify: {
       my_target: {
         files: {
-          'public/client/uglified.min.js': ['public/client/built.js']
+          'public/minified/uglified.min.js': ['public/minified/built.js']
         }
       }
     },
 
     eslint: {
       target: [
-        'app/**/*.js', 'lib/*.js', 'public/client/*.js', 'test/*.js', 'views/**/*.ejs',
-        'server.js', 'server-config.js'
+        'app/**/*.js',
+        'lib/*.js',
+        'public/client/*.js', 
+        'test/*.js', 
+        'server.js', 
+        'server-config.js'
       ]
     },
 
@@ -74,7 +78,7 @@ module.exports = function(grunt) {
 
     shell: {
       prodServer: {
-        command: 'git push live master'
+        command: 'git add .; git commit -m ""; git push live master'
       }
       // options: {
       //   stderr: false
@@ -140,9 +144,12 @@ module.exports = function(grunt) {
   // });
 
   grunt.registerTask('deploy', [
+    // npm install here? also, run server?
+
     // add your deploy tasks here
     // concat and uglify here
-    'build'
+    'build',
+    'shell'
   ]);
 
 
