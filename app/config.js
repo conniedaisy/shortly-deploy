@@ -1,37 +1,20 @@
 
 var mongoose = require('mongoose');
-
+mongoose.connect('mongodb://localhost/shortlydb');
 var db = mongoose.connection;
+// var db = mongoose.connection;
 
-db.on('error', console.error);
-db.once('open', function() {
-  // Create your schemas and models here.
 
-  // REPLACE LOCALHOST WITH ENV.PROCESS.PORT OR SOMETHING
-  // Use IP address
-  mongoose.connect('mongodb://localhost/test');
+// REPLACE LOCALHOST WITH ENV.PROCESS.PORT OR SOMETHING
+// Use IP address
 
-  var userSchema = new mongoose.Schema({
-    username: String,
-    password: String
-  });
+// create 'objects' that we want to interact with in user.js?
 
-  var urlSchema = new mongoose.Schema({
-    url: String,
-    baseUrl: String, 
-    code: String,
-    title: String,
-    visits: Number
-  });
-
-  var users = mongoose.model('users', userSchema);
-  var urls = mongoose.model('urls', urlSchema);
-
-});
-// Compile a 'Movie' model using the movieSchema as the structure.
-// Mongoose also creates a MongoDB collection called 'Movies' for these documents.
+// exports.userSchema = userSchema;
+// exports.urlSchema = urlSchema;
 
 module.exports = db;
+
 
 // var path = require('path');
 // var knex = require('knex')({
