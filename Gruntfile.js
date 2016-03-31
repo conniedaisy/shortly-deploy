@@ -50,7 +50,7 @@ module.exports = function(grunt) {
       },
       target: {
         files: {
-          'public/.min.css': ['public/*.css']
+          'public/min.css': ['public/*.css']
         }
       }
     },
@@ -74,8 +74,16 @@ module.exports = function(grunt) {
 
     shell: {
       prodServer: {
+        command: 'git push live master'
       }
-    },
+      // options: {
+      //   stderr: false
+      // },
+      // target: {
+      //   command: 'ls'
+      // },
+      // another: 'ls ./src' // shorthand 
+    }
   });
 
   grunt.loadNpmTasks('grunt-contrib-uglify');
@@ -102,6 +110,7 @@ module.exports = function(grunt) {
 
 
   grunt.registerTask('upload', function(n) {
+      grunt.task.run([ 'shell:prodServer' ]);
     if (grunt.option('prod')) {
       // add your production server task here
     }
@@ -122,13 +131,13 @@ module.exports = function(grunt) {
     'watch'
   ]);
 
-  grunt.registerTask('upload', function(n) {
-    if (grunt.option('prod')) {
-      // add your production server task here
-    } else {
-      grunt.task.run([ 'server-dev' ]);
-    }
-  });
+  // grunt.registerTask('upload', function(n) {
+  //   if (grunt.option('prod')) {
+  //     // add your production server task here
+  //   } else {
+  //     grunt.task.run([ 'server-dev' ]);
+  //   }
+  // });
 
   grunt.registerTask('deploy', [
     // add your deploy tasks here
