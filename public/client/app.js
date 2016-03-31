@@ -7,6 +7,7 @@ window.Shortly = Backbone.View.extend({
   },
 
   initialize: function() {
+    console.log('testing if grunt is working, v4');
     console.log( 'Shortly is running' );
     $('body').append(this.render().el);
 
@@ -38,3 +39,4 @@ window.Shortly = Backbone.View.extend({
       .addClass('selected');
   }
 });
+
