@@ -3,6 +3,13 @@ module.exports = function(grunt) {
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
     concat: {
+      options: {
+        separator: ';',
+      },
+      dist: {
+        src: ['public/client/*.js', 'public/lib/*.js'],
+        dest: 'public/dist/built.js',
+      },
     },
 
     mochaTest: {
@@ -21,17 +28,25 @@ module.exports = function(grunt) {
     },
 
     uglify: {
+      my_target: {
+        files: {
+          'public/dist/uglified.min.js': ['public/dist/built.js']
+        }
+      }
     },
 
     eslint: {
       target: [
-        // Add list of files to lint here
+        'app/**/*.js', 'lib/*.js', 'public/client/*.js', 'test/*.js', 'views/**/*.ejs',
+        'server.js', 'server-config.js'
       ]
     },
 
     cssmin: {
     },
 
+    // why would we WANT to re-concat and re-uglify when we save a file change,
+    // when we only care about those things when we do a build?
     watch: {
       scripts: {
         files: [
@@ -62,6 +77,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-eslint');
   grunt.loadNpmTasks('grunt-mocha-test');
   grunt.loadNpmTasks('grunt-shell');
+  grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-nodemon');
 
   grunt.registerTask('server-dev', function (target) {
@@ -94,6 +110,9 @@ module.exports = function(grunt) {
   ]);
 
   grunt.registerTask('build', [
+    'eslint',
+    'test',
+    'watch'
   ]);
 
   grunt.registerTask('upload', function(n) {
@@ -106,6 +125,8 @@ module.exports = function(grunt) {
 
   grunt.registerTask('deploy', [
     // add your deploy tasks here
+    // concat and uglify here
+    'build'
   ]);
 
 
